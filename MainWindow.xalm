@@ -1,0 +1,72 @@
+﻿<Window x:Class="CalculatorWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Calculator" Height="450" Width="300">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Дисплей -->
+        <TextBox Name="Display"
+                 FontSize="28"
+                 Text="0"
+                 IsReadOnly="True"
+                 TextAlignment="Right"
+                 VerticalContentAlignment="Center"/>
+
+        <!-- Кнопки -->
+        <Grid Grid.Row="1">
+
+            <!-- 5 рядків -->
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- 4 колонки -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 1 ряд -->
+            <Button Content="CE" Click="Undo_Click" Grid.Row="0" Grid.Column="0"/>
+            <Button Content="C" Click="Clear_Click" Grid.Row="0" Grid.Column="1"/>
+            <Button Content="⌫" Grid.Row="0" Grid.Column="2"/>
+            <Button Content="÷" Click="Operation_Click" Grid.Row="0" Grid.Column="3"/>
+
+            <!-- 2 ряд -->
+            <Button Content="7" Click="Number_Click" Grid.Row="1" Grid.Column="0"/>
+            <Button Content="8" Click="Number_Click" Grid.Row="1" Grid.Column="1"/>
+            <Button Content="9" Click="Number_Click" Grid.Row="1" Grid.Column="2"/>
+            <Button Content="×" Click="Operation_Click" Grid.Row="1" Grid.Column="3"/>
+
+            <!--3 ряд -->
+            <Button Content="4" Click="Number_Click" Grid.Row="2" Grid.Column="0"/>
+            <Button Content="5" Click="Number_Click" Grid.Row="2" Grid.Column="1"/>
+            <Button Content="6" Click="Number_Click" Grid.Row="2" Grid.Column="2"/>
+            <Button Content="-" Click="Operation_Click" Grid.Row="2" Grid.Column="3"/>
+
+            <!-- 4 ряд -->
+            <Button Content="1" Click="Number_Click" Grid.Row="3" Grid.Column="0"/>
+            <Button Content="2" Click="Number_Click" Grid.Row="3" Grid.Column="1"/>
+            <Button Content="3" Click="Number_Click" Grid.Row="3" Grid.Column="2"/>
+            <Button Content="+" Click="Operation_Click" Grid.Row="3" Grid.Column="3"/>
+
+            <!-- 5 ряд -->
+            <Button Content="00" Click="Number_Click" Grid.Row="4" Grid.Column="0"/>
+            <Button Content="0" Click="Number_Click" Grid.Row="4" Grid.Column="1"/>
+            <Button Content="." Click="Number_Click" Grid.Row="4" Grid.Column="2"/>
+            <Button Content="=" Click="Equals_Click" Grid.Row="4" Grid.Column="3"/>
+
+        </Grid>
+    </Grid>
+</Window>
