@@ -114,5 +114,128 @@ namespace CalculatorWPF
 
             Display.Text = "0";
         }
+
+        private Stack<Command> history = new Stack<Command>();
+
+        // =
+        private void Equals_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(currentInput)) return;
+
+            double operand = double.Parse(currentInput);
+            Command cmd = null;
+
+            switch (currentOperation)
+            {
+                case "+":
+                    cmd = new AddCommand(currentValue, operand);
+                    break;
+                case "-":
+                    cmd = new SubCommand(currentValue, operand);
+                    break;
+                case "×":
+                    cmd = new MulCommand(currentValue, operand);
+                    break;
+                case "÷":
+                    if (operand == 0)
+                    {
+                        MessageBox.Show("Ділення на нуль!");
+                        return;
+                    }
+                    cmd = new DivCommand(currentValue, operand);
+                    break;
+            }
+
+            if (cmd != null)
+            {
+                cmd.Execute();
+                history.Push(cmd);
+
+                currentValue = cmd.Result;
+                Display.Text = currentValue.ToString();
+                currentInput = "";
+            }
+        }
+
+        // Undo (CE)
+        private void Undo_Click(object sender, RoutedEventArgs e)
+        {
+            if (history.Count > 0)
+            {
+                var cmd = history.Pop();
+                currentValue = cmd.Previous;
+
+                Display.Text = currentValue.ToString();
+                currentInput = "";
+            }
+        }
+
+        // Command Pattern
+        public abstract class Command
+        {
+            public double Previous { get; protected set; }
+            public double Result { get; protected set; }
+            public abstract void Execute();
+        }
+
+        public class AddCommand : Command
+        {
+            private double a, b;
+            public AddCommand(double a, double b)
+            {
+                this.a = a;
+                this.b = b;
+            }
+            public override void Execute()
+            {
+                Previous = a;
+                Result = a + b;
+            }
+        }
+
+        public class SubCommand : Command
+        {
+            private double a, b;
+            public SubCommand(double a, double b)
+            {
+                this.a = a;
+                this.b = b;
+            }
+            public override void Execute()
+            {
+                Previous = a;
+                Result = a - b;
+            }
+        }
+
+        public class MulCommand : Command
+        {
+            private double a, b;
+            public MulCommand(double a, double b)
+            {
+                this.a = a;
+                this.b = b;
+            }
+            public override void Execute()
+            {
+                Previous = a;
+                Result = a * b;
+            }
+        }
+
+        public class DivCommand : Command
+        {
+            private double a, b;
+            public DivCommand(double a, double b)
+            {
+                this.a = a;
+                this.b = b;
+            }
+            public override void Execute()
+            {
+                Previous = a;
+                Result = a / b;
+            }
+        }
     }
 }
